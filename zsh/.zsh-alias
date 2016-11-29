@@ -67,10 +67,6 @@ alias vrs="vagrant reload && vagrant ssh"
 alias dcu="docker-compose up"
 alias dcb="docker-compose build"
 
-#slacks
-alias provideitslack="SLACK_TOKEN='***REMOVED***' node /opt/terminal-slack"
-
-
 
 export NVM_DIR="/home/ranbogmord/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
