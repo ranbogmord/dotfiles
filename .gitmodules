@@ -66,3 +66,6 @@ url = https://github.com/jelera/vim-javascript-syntax.git
 path = vim/.vim/bundle/vim-nerdtree-tabs
 url = https://github.com/jistr/vim-nerdtree-tabs.git
 
+[submodule "vim/.vim/bundle/vim-json"]
+	path = vim/.vim/bundle/vim-json
+	url = https://github.com/elzr/vim-json
