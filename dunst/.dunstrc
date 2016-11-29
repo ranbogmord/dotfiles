@@ -1,0 +1,14 @@
+[urgency_low]
+background=#2c3e50
+foreground=#ecf0f1
+timeout=10
+
+[urgency_normal]
+background=#ecf0f1
+foreground=#2c3e50
+timeout=10
+
+[urgency_critical]
+background=#d35400
+foreground=#ecf0f1
+
