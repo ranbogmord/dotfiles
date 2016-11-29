@@ -3,10 +3,7 @@ export PATH="$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-
 export EDITOR=vim
 export VAGRANT_DEFAULT_PROVIDER="virtualbox"
 
-#awscli
-export AWS_ACCESS_KEY_ID="***REMOVED***"
-export AWS_SECRET_ACCESS_KEY="***REMOVED***"
-export AWS_DEFAULT_REGION="***REMOVED***"
+[[ -f "~/.awscreds" ]] && source ~/.awscreds
 
 # System
 alias ll="ls -lah"
