@@ -12,12 +12,7 @@ export PATH="$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-
 export EDITOR=vim
 export VAGRANT_DEFAULT_PROVIDER="virtualbox"
 
-#awscli
-export AWS_ACCESS_KEY_ID="***REMOVED***"
-export AWS_SECRET_ACCESS_KEY="***REMOVED***"
-export AWS_DEFAULT_REGION="***REMOVED***"
-
-
+[[ -f "~/.awscred"  ]] && source "~/.awscred"
 
 # System
 alias ll="ls -lah"
@@ -61,11 +56,6 @@ alias vdestroyr="vagrant destroy -f && vagrant up"
 alias vs="vagrant ssh"
 alias vus="vagrant up && vagrant ssh"
 alias vrs="vagrant reload && vagrant ssh"
-
-#slacks
-alias provideitslack="SLACK_TOKEN='***REMOVED***' node /opt/terminal-slack"
-
-
 
 export NVM_DIR="/home/ranbogmord/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
