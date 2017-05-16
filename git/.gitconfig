@@ -1,0 +1,30 @@
+[user]
+	email = john@provideit.se
+	name = John Eriksson
+[push]
+	default = simple
+[core]
+	fileMode = false
+[alias]
+	co = checkout
+	cob = checkout -b
+        st = status
+        s = status -s
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	ml = merge --no-ff --log
+        mlnc = merge --log --no-ff --no-commit
+        remove-local = branch -d
+        remove-remote = push -u origin
+        feature = "!f() { git checkout -b \"feature/$1\";  }; f"
+        sync = "!f() { git pull && git push;  }; f"
+[merge]
+        tool = pstorm
+[mergetool "pstorm"]
+        cmd = /opt/PhpStorm/bin/phpstorm.sh merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
+        trustExitCode = true
+[diff]
+        tool = pstorm
+[difftool "pstorm"]
+        cmd = /opt/PhpStorm/bin/phpstorm.sh diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
+
