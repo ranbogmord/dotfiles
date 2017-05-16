@@ -9,4 +9,7 @@ rofi.color-normal: #2c3e50, #ecf0f1, #2c3e50, #9b59b6, #ecf0f1
 rofi.color-active: #2c3e50, #ecf0f1, #2c3e50, #2c3e50, #ecf0f1
 rofi.color-urgent: #2c3e50, #ecf0f1, #2c3e50, #2c3e50, #ecf0f1
 rofi.opacity: 85
+rofi.terminal: terminator
+rofi.ssh-client: ssh
+rofi.ssh-command: {terminal} -e "{ssh-client} {host}"
 

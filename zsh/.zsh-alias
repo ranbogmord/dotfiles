@@ -1,5 +1,5 @@
 # ENV
-export PATH="$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:/opt/vcf2csv:$PATH"
+export PATH="./node_modules/.bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:/opt/vcf2csv:$HOME/.gem/ruby/2.4.0/bin:/opt/jetbrains-toolbox:$HOME/.composer/vendor/bin:$PATH"
 export EDITOR=vim
 export VAGRANT_DEFAULT_PROVIDER="virtualbox"
 
@@ -23,11 +23,18 @@ alias start="systemctl start"
 alias stop="systemctl stop"
 alias system-update="packer -Suy --noconfirm --noedit"
 alias getuuid="uuidgen | tr -d '\n' | sed 's/-//g' | clipcopy"
+alias edit-hosts="sudo vim /etc/hosts && restart dnsmasq.service"
+alias zshalias="vim ~/.zsh-alias && source ~/.zsh-alias"
+alias pstorm="pstorm &> /dev/null &"
+alias getip="curl ipinfo.io/ip"
+#alias vactivate="source ./bin/activate"
 
 alias ..="cd .."
 alias 2..="cd ../.."
 alias 3..="cd ../../.."
 alias 4..="cd ../../../.."
+
+alias midmancd="cd /www/provideit/radiator/midman"
 
 #function md () mkdir -p "$1" && cd "$1"
 #function md()
@@ -35,6 +42,16 @@ alias 4..="cd ../../../.."
 #        mkdir -p "$1" && cd "$1"
 #}
 #export -f md
+
+vactivate() {
+        if [[ -n "$1"  ]]; then
+                FOLDER=$1
+        else
+                FOLDER="."
+        fi
+
+        source "$FOLDER/bin/activate"
+}
 
 wcd() { cd "/www/$1" }
 
@@ -54,6 +71,9 @@ alias remove-orig="find . -name '*.orig' | xargs rm"
 function gcd { cd "$(git rev-parse --show-toplevel)"; }; #export -f gcd;
 alias g..='git rev-parse && cd "$(git rev-parse --show-toplevel)"'
 
+alias midman-deploy-stage="git co stage && git ml - && git push && git co -"
+alias merge-develop="git co develop && git ml - && git push && git co -"
+
 # Vagrant
 alias vu="vagrant up"
 alias vh="vagrant halt"
@@ -66,7 +86,10 @@ alias vrs="vagrant reload && vagrant ssh"
 # Docker compose
 alias dcu="docker-compose up"
 alias dcb="docker-compose build"
-
+alias dce="docker-compose exec"
+alias dcs="docker-compose stop"
+alias dcl="docker-compose logs"
+alias dc-rebuild="docker-compose down && docker-compose up -d"
 
 export NVM_DIR="/home/ranbogmord/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
