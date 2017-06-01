@@ -80,11 +80,13 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="vim ~/.zshrc"
+alias zshconfig="vim ~/.zshrc && source ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 #export PS1="%n@%m %d $ "
 #
+#export PS1="%{$fg_no_bold[cyan]%}%n%{$fg_no_bold[magenta]%}•%{$fg_no_bold[green]%}%3~$(git_prompt_info)%{$reset_color%} $ "
+
 source ~/.zsh-alias
 
 source /home/ranbogmord/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
