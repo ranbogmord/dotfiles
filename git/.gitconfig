@@ -16,8 +16,10 @@
         mlnc = merge --log --no-ff --no-commit
         remove-local = branch -d
         remove-remote = push -u origin
-        feature = "!f() { git checkout -b \"feature/$1\";  }; f"
+        feature = "!f() { git checkout master && git pull && git checkout -b \"feature/$1\";  }; f"
         sync = "!f() { git pull && git push;  }; f"
+        merge-dev = "!f() { git checkout stage && git merge --no-ff --log -; }; f"
+        put-live = "!f() { git merge master && git checkout master && git pull && git merge -; }; f"
 [merge]
         tool = pstorm
 [mergetool "pstorm"]

@@ -1,5 +1,5 @@
 # ENV
-export PATH="./node_modules/.bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:/opt/vcf2csv:$HOME/.gem/ruby/2.4.0/bin:/opt/jetbrains-toolbox:$HOME/.composer/vendor/bin:$PATH"
+export PATH="./node_modules/.bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:/opt/vcf2csv:$HOME/.gem/ruby/2.4.0/bin:/opt/jetbrains-toolbox:$HOME/.composer/vendor/bin:/opt/dex2jar:$PATH"
 export EDITOR=vim
 export VAGRANT_DEFAULT_PROVIDER="virtualbox"
 
@@ -28,6 +28,7 @@ alias zshalias="vim ~/.zsh-alias && source ~/.zsh-alias"
 alias pstorm="pstorm &> /dev/null &"
 alias getip="curl ipinfo.io/ip"
 #alias vactivate="source ./bin/activate"
+alias run-playbook="ansible-playbook -i hosts site.yml"
 
 alias ..="cd .."
 alias 2..="cd ../.."
@@ -82,6 +83,10 @@ alias vdestroyr="vagrant destroy -f && vagrant up"
 alias vs="vagrant ssh"
 alias vus="vagrant up && vagrant ssh"
 alias vrs="vagrant reload && vagrant ssh"
+alias vup="vagrant up --provision"
+alias vups="vagrant up --provision && vagrant ssh"
+alias vrp="vagrant reload --provision"
+alias vrps="vagrant reload --provision && vagrant ssh"
 
 # Docker compose
 alias dcu="docker-compose up"
@@ -90,6 +95,10 @@ alias dce="docker-compose exec"
 alias dcs="docker-compose stop"
 alias dcl="docker-compose logs"
 alias dc-rebuild="docker-compose down && docker-compose up -d"
+
+# OpenSSL
+#alias check-expiry="echo | openssl s_client -connect $1:443 2>/dev/null | openssl x509 -noout -dates"
+function check-expiry() { echo | openssl s_client -connect "$1:443" 2>/dev/null | openssl x509 -noout -dates;  };
 
 export NVM_DIR="/home/ranbogmord/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

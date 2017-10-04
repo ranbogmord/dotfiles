@@ -87,6 +87,14 @@ alias zshconfig="vim ~/.zshrc && source ~/.zshrc"
 #
 #export PS1="%{$fg_no_bold[cyan]%}%n%{$fg_no_bold[magenta]%}•%{$fg_no_bold[green]%}%3~$(git_prompt_info)%{$reset_color%} $ "
 
-source ~/.zsh-alias
+export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault-pass
 
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent > ~/.ssh-agent-thing
+fi
+if [[ "$SSH_AGENT_PID" == "" ]]; then
+    eval "$(<~/.ssh-agent-thing)" &>/dev/null
+fi
+
+source ~/.zsh-alias
 source /home/ranbogmord/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
