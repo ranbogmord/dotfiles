@@ -86,8 +86,14 @@ alias zshconfig="vim ~/.zshrc && source ~/.zshrc"
 #export PS1="%n@%m %d $ "
 #
 #export PS1="%{$fg_no_bold[cyan]%}%n%{$fg_no_bold[magenta]%}•%{$fg_no_bold[green]%}%3~$(git_prompt_info)%{$reset_color%} $ "
+#export PS1="\e[36m%n\e[35m-\e[32m%3~\e[0m"
 
-export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault-pass
+source ~/.dotfiles/zsh/zsh-git-prompt/zshrc.sh
+precmd() {
+        PROMPT="%{$fg[cyan]%}%n%{$fg[magenta]%} | %{$fg[green]%}%3~%{$reset_color%} $(git_super_status) » "
+}
+
+#export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault-pass
 
 if ! pgrep -u "$USER" ssh-agent > /dev/null; then
     ssh-agent > ~/.ssh-agent-thing
