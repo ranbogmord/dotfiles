@@ -90,7 +90,8 @@ alias zshconfig="vim ~/.zshrc && source ~/.zshrc"
 
 source ~/.dotfiles/zsh/zsh-git-prompt/zshrc.sh
 precmd() {
-        PROMPT="%{$fg[cyan]%}%n%{$fg[magenta]%} | %{$fg[green]%}%3~%{$reset_color%} $(git_super_status) » "
+        #PROMPT="%{$fg[cyan]%}%n%{$fg[magenta]%} | %{$fg[green]%}%3~%{$reset_color%} $(git_super_status) » "
+        PROMPT="» %{$fg[green]%}%3~%{$reset_color%} $(git_super_status) » "
 }
 
 #export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault-pass
@@ -101,6 +102,14 @@ fi
 if [[ "$SSH_AGENT_PID" == "" ]]; then
     eval "$(<~/.ssh-agent-thing)" &>/dev/null
 fi
+
+function chpwd {
+    [[ -f "`pwd`/.direnv" ]] && source "`pwd`/.direnv"
+    echo "`pwd`" > /tmp/.curdir
+}
+
+[[ -f /tmp/.curdir ]] && cd `cat /tmp/.curdir`
+
 
 source ~/.zsh-alias
 source /home/ranbogmord/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

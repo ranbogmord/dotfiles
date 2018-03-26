@@ -4,6 +4,12 @@ call pathogen#helptags()
 syntax on
 filetype plugin indent on
 
+au FileType javascript setl sw=2 sts=2 et
+au FileType python setl sw=4 sts=4 et
+au FileType json setl sw=2 sts=2 et
+au FileType php setl sw=4 sts=2 et
+
+
 "autocmd vimenter * NERDTree
 "let g:nerdtree_tabs_open_on_console_startup=1
 
@@ -19,6 +25,8 @@ nnoremap <C-e> :NERDTreeToggle<CR>
 "inoremap { {}<Esc>i
 inoremap <TAB> <C-y>,
 
+nmap <F8> :TagbarToggle<CR>
+
 set number
 
 "colors
@@ -27,7 +35,6 @@ set background=dark
 "highlight Normal ctermfg=grey ctermbg=black
 "highlight LineNr ctermfg=white
 "highlight Visual ctermfg=black ctermbg=white
-
 
 "vdebug path mappings
 let g:vdebug_options = {

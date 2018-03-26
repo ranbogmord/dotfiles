@@ -11,6 +11,10 @@ PS1='[\u@\h \W]\$ '
 export PATH="$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:$PATH"
 export EDITOR=vim
 export VAGRANT_DEFAULT_PROVIDER="virtualbox"
+export GOPATH="/www/go"
+export PATH="$PATH:$GOPATH/bin"
+export GOBIN="$GOPATH/bin"
+
 
 [[ -f "~/.awscred"  ]] && source "~/.awscred"
 

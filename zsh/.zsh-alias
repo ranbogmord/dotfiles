@@ -1,7 +1,23 @@
 # ENV
-export PATH="./node_modules/.bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:/opt/vcf2csv:$HOME/.gem/ruby/2.4.0/bin:/opt/jetbrains-toolbox:$HOME/.composer/vendor/bin:/opt/dex2jar:$PATH"
+export PATH="./node_modules/.bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:/opt/vcf2csv:$HOME/.gem/ruby/2.4.0/bin:/opt/jetbrains-toolbox:$HOME/.composer/vendor/bin:/opt/dex2jar:/usr/local/go/bin:/home/ranbogmord/.gem/ruby/2.5.0/bin:$PATH"
 export EDITOR=vim
 export VAGRANT_DEFAULT_PROVIDER="virtualbox"
+export GOPATH="/www/go"
+export PATH="$PATH:$GOPATH/bin"
+export GOBIN="$GOPATH/bin"
+export GOROOT="/usr/local/go"
+export GOTOOLDIR="/usr/local/go/pkg/tool/linux_amd64"
+export GCCGO="gccgo"
+export CC="gcc"
+export GOGCCFLAGS="-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build009601552=/tmp/go-build -gno-record-gcc-switches"
+
+export NPM_CONFIG_SAVE=true
+export NPM_CONFIG_SAVE_EXACT=true
+export NPM_CONFIG_INIT_AUTHOR_NAME="John Eriksson"
+export NPM_CONFIG_INIT_AUTHOR_EMAIL="root@ranbogmord.com"
+export NPM_CONFIG_INIT_LICENSE="MIT"
+export NPM_CONFIG_PYTHON="python2"
+export NPM_CONFIG_SIGN_GIT_TAG=true
 
 [[ -f "~/.awscreds" ]] && source ~/.awscreds
 
@@ -29,11 +45,25 @@ alias pstorm="pstorm &> /dev/null &"
 alias getip="curl ipinfo.io/ip"
 #alias vactivate="source ./bin/activate"
 alias run-playbook="ansible-playbook -i hosts site.yml"
-
+alias ovpn="sudo openvpn --config"
+alias encrypt="openssl enc -aes-256-cbc -a"
+alias decrypt="openssl enc -aes-256-cbc -a -d"
 alias ..="cd .."
 alias 2..="cd ../.."
 alias 3..="cd ../../.."
 alias 4..="cd ../../../.."
+
+#alias screenshot="FNAME=`date +'%Y-%m-%d_%H%M%S'`.png import /tmp/screen.png && scp /tmp/screen.png images:/var/www/html/$FNAME && echo -n \"https://images.ranbogmord.com/$FNAME\" | xclip -sel c"
+screenshot()
+{
+        FNAME=`date +'%Y-%m-%d_%H%M%S'`
+        import /tmp/screen.png \
+                && scp /tmp/screen.png images:/var/www/html/$FNAME.png \
+                && echo -n "https://images.ranbogmord.com/$FNAME.png" | xclip -sel c \
+                && cp /tmp/screen.png ~/Pictures/Screenshots/$FNAME.png \
+                && rm /tmp/screen.png \
+                && notify-send "Link copied to clipboard"
+}
 
 alias midmancd="cd /www/provideit/radiator/midman"
 
@@ -58,6 +88,9 @@ wcd() { cd "/www/$1" }
 
 pcd() { cd "/www/provideit/$1"  }
 
+loadtest() {
+        ab -kl -H "Accept-Encoding: gzip, deflate" -n $1 -c $2 "$3" 
+}
 
 # Git
 alias gs="git status"
@@ -94,7 +127,14 @@ alias dcb="docker-compose build"
 alias dce="docker-compose exec"
 alias dcs="docker-compose stop"
 alias dcl="docker-compose logs"
+alias dcps="docker-compose ps"
 alias dc-rebuild="docker-compose down && docker-compose up -d"
+alias dc-init="cp ~/.base-docker-compose.yml docker-compose.yml"
+alias pwdtest="echo \"`pwd`\""
+
+dcrestart() {
+        docker-compose stop $1 && docker-compose up -d $1;
+}
 
 # Artisan
 alias a="php artisan"

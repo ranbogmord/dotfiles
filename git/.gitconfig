@@ -1,6 +1,7 @@
 [user]
 	email = john@provideit.se
 	name = John Eriksson
+	signingkey = CD59378FF1A325DF58DB0E17786565B4BFB31FC7
 [push]
 	default = simple
 [core]
