@@ -110,6 +110,10 @@ function chpwd {
 
 [[ -f /tmp/.curdir ]] && cd `cat /tmp/.curdir`
 
+if [ $commands[kubectl] ]; then
+  source <(kubectl completion zsh)
+fi
 
 source ~/.zsh-alias
 source /home/ranbogmord/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+

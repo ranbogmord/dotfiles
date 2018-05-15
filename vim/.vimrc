@@ -25,9 +25,13 @@ nnoremap <C-e> :NERDTreeToggle<CR>
 "inoremap { {}<Esc>i
 inoremap <TAB> <C-y>,
 
+nmap <F12> :GoDef<CR>
+nmap <F2> :GoImports<CR>
 nmap <F8> :TagbarToggle<CR>
 
 set number
+set splitbelow
+set splitright
 
 "colors
 colorscheme neonwave

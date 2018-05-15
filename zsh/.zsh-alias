@@ -48,10 +48,19 @@ alias run-playbook="ansible-playbook -i hosts site.yml"
 alias ovpn="sudo openvpn --config"
 alias encrypt="openssl enc -aes-256-cbc -a"
 alias decrypt="openssl enc -aes-256-cbc -a -d"
+alias encless="openssl enc -aes-256-cbc -a -d | less"
 alias ..="cd .."
 alias 2..="cd ../.."
 alias 3..="cd ../../.."
 alias 4..="cd ../../../.."
+alias godir="cd /www/go/src"
+
+bbinky()
+{
+        inky src/inky/$1.html dist/inky \
+                && node premailer.js dist/inky/$1.html > dist/inky/$1-inlined.html \
+                && echo "Template built for $1"
+}
 
 #alias screenshot="FNAME=`date +'%Y-%m-%d_%H%M%S'`.png import /tmp/screen.png && scp /tmp/screen.png images:/var/www/html/$FNAME && echo -n \"https://images.ranbogmord.com/$FNAME\" | xclip -sel c"
 screenshot()
@@ -90,6 +99,13 @@ pcd() { cd "/www/provideit/$1"  }
 
 loadtest() {
         ab -kl -H "Accept-Encoding: gzip, deflate" -n $1 -c $2 "$3" 
+}
+
+reset_docker_machine() {
+        export DOCKER_TLS_VERIFY=""
+        export DOCKER_HOST=""
+        export DOCKER_CERT_PATH=""
+        export DOCKER_MACHINE_NAME=""
 }
 
 # Git
@@ -131,6 +147,9 @@ alias dcps="docker-compose ps"
 alias dc-rebuild="docker-compose down && docker-compose up -d"
 alias dc-init="cp ~/.base-docker-compose.yml docker-compose.yml"
 alias pwdtest="echo \"`pwd`\""
+
+# Kubectl
+alias kc="kubectl"
 
 dcrestart() {
         docker-compose stop $1 && docker-compose up -d $1;
