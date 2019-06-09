@@ -1,5 +1,6 @@
 # ENV
-export PATH="./node_modules/.bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:/opt/vcf2csv:$HOME/.gem/ruby/2.4.0/bin:/opt/jetbrains-toolbox:$HOME/.composer/vendor/bin:/opt/dex2jar:/usr/local/go/bin:/home/ranbogmord/.gem/ruby/2.5.0/bin:$PATH"
+export PATH="/opt/jetbrains-tools:/opt/cisco/anyconnect/bin:./node_modules/.bin:$HOME/.gem/ruby/2.3.0/bin:$HOME/.npm-packages/bin:/opt/Mongoclient-linux-x64:/opt/wpscan:/opt/vcf2csv:$HOME/.gem/ruby/2.4.0/bin:/opt/jetbrains-toolbox:$HOME/.composer/vendor/bin:/opt/dex2jar:/usr/local/go/bin:/home/ranbogmord/.gem/ruby/2.5.0/bin:/usr/NX/bin:/home/ranbogmord/.local/bin:/opt/android-sdk/tools/bin:$PATH"
+export KUBECONFIG=$HOME/.kube/config:$HOME/.kube/config-ranbogmord-kube:$HOME/.kube/k8s-do-test-kubeconfig.yaml
 export EDITOR=vim
 export VAGRANT_DEFAULT_PROVIDER="virtualbox"
 export GOPATH="/www/go"
@@ -10,6 +11,7 @@ export GOTOOLDIR="/usr/local/go/pkg/tool/linux_amd64"
 export GCCGO="gccgo"
 export CC="gcc"
 export GOGCCFLAGS="-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build009601552=/tmp/go-build -gno-record-gcc-switches"
+export ANDROID_HOME="/opt/android-sdk"
 
 export NPM_CONFIG_SAVE=true
 export NPM_CONFIG_SAVE_EXACT=true
@@ -31,7 +33,6 @@ alias systemctl="sudo systemctl"
 alias open="xdg-open"
 alias dirsize="find . -maxdepth 1 -type d | xargs -n 1 du -sh"
 alias vim-ide="vim -c 'NERDTree'";
-alias devssl="openssl req -x509 -newkey rsa:2048 -keyout dev.key -out dev.crt -days 365 -nodes -subj '/C=SE/ST=Vastra Gotaland/L=Gothenburg/O=DEVCERT/OU=DEV'"
 alias tmptmp="cd $(mktemp -d)"
 alias restart="systemctl restart"
 alias status="systemctl status"
@@ -41,7 +42,7 @@ alias system-update="packer -Suy --noconfirm --noedit"
 alias getuuid="uuidgen | tr -d '\n' | sed 's/-//g' | clipcopy"
 alias edit-hosts="sudo vim /etc/hosts && restart dnsmasq.service"
 alias zshalias="vim ~/.zsh-alias && source ~/.zsh-alias"
-alias pstorm="pstorm &> /dev/null &"
+#alias pstorm="/opt/jetbrains-tools/phpstorm &> /dev/null &"
 alias getip="curl ipinfo.io/ip"
 #alias vactivate="source ./bin/activate"
 alias run-playbook="ansible-playbook -i hosts site.yml"
@@ -54,6 +55,17 @@ alias 2..="cd ../.."
 alias 3..="cd ../../.."
 alias 4..="cd ../../../.."
 alias godir="cd /www/go/src"
+alias intraservice="cd /www/provideit/intraservice"
+alias sshconfig="vim ~/.ssh/config"
+alias passssh="ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no"
+alias jira="jira-cli"
+alias p="python"
+alias lighthouse="lighthouse --chrome-flags=\"--no-sandbox --headless --disable-gpu\""
+alias intravpn="sudo vpn connect vpn.goteborg.se"
+alias intravpn-off="sudo vpn disconnect"
+mkpass() {
+        head /dev/urandom | tr -dc A-Za-z0-9 | head -c $1 ; echo ''
+}
 
 bbinky()
 {
@@ -63,15 +75,39 @@ bbinky()
 }
 
 #alias screenshot="FNAME=`date +'%Y-%m-%d_%H%M%S'`.png import /tmp/screen.png && scp /tmp/screen.png images:/var/www/html/$FNAME && echo -n \"https://images.ranbogmord.com/$FNAME\" | xclip -sel c"
-screenshot()
+#screenshot()
+#{
+#        FNAME=`date +'%Y-%m-%d_%H%M%S'`
+#        import /tmp/screen.png \
+#                && cp /tmp/screen.png ~/Pictures/Screenshots/$FNAME.png \
+#                && scp /tmp/screen.png images:/var/www/html/$FNAME.png \
+#                && echo -n "https://images.ranbogmord.com/$FNAME.png" | xclip -sel c \
+#                && rm /tmp/screen.png \
+#                && notify-send "Link copied to clipboard"
+#}
+#screenshot() 
+#{
+#        scrot '%Y-%m-%d_%H%M%S.png' -s -e 'scp $f images:/var/www/html && mv $f ~/Pictures/Screenshots && echo -n "https://images.ranbogmord.com/$f" | xclip -sel -c && notify-send "Link copied"'
+#}
+
+cert-fingerprint()
 {
-        FNAME=`date +'%Y-%m-%d_%H%M%S'`
-        import /tmp/screen.png \
-                && scp /tmp/screen.png images:/var/www/html/$FNAME.png \
-                && echo -n "https://images.ranbogmord.com/$FNAME.png" | xclip -sel c \
-                && cp /tmp/screen.png ~/Pictures/Screenshots/$FNAME.png \
-                && rm /tmp/screen.png \
-                && notify-send "Link copied to clipboard"
+        cat $1 | sed -e 's/-----BEGIN CERTIFICATE-----//' -e 's/-----END CERTIFICATE-----//' | tr -d '\n' | base64 -d | openssl sha1 -binary | base64 -w 0 | sed -e 's#/#_#g' -e 's#\+#-#g' -e 's/=//g'
+}
+
+
+#alias devssl="openssl req -x509 -newkey rsa:2048 -keyout dev.key -out dev.crt -days 365 -nodes -subj '/C=SE/ST=Vastra Gotaland/L=Gothenburg/O=DEVCERT/OU=DEV'"
+devssl()
+{
+        openssl req -x509 -newkey rsa:4096 -keyout dev.key -out dev.crt -days 365 -nodes -subj "/C=SE/ST=Vastra Gotaland/L=Gothenburg/O=DEVCERT/OU=DEV/CN=$1"
+}
+
+devsslca()
+{
+        openssl genrsa -out dev.key 4096 \
+        && openssl req -new -key dev.key -out dev.csr -subj "/C=SE/ST=Vastra Gotaland/L=Gothenburg/O=DEVCERT/OU=DEV/CN=$1" \
+        && openssl x509 -req -in dev.csr -CA ~/Work/CA/root.crt -CAkey ~/Work/CA/root.key -CAcreateserial -out dev.crt -days 365 -sha256 \
+        && rm dev.csr
 }
 
 alias midmancd="cd /www/provideit/radiator/midman"
@@ -101,11 +137,39 @@ loadtest() {
         ab -kl -H "Accept-Encoding: gzip, deflate" -n $1 -c $2 "$3" 
 }
 
+checkcookies() {
+        phantomjs /www/check-cookies.js $1
+}
+
+ppr() {
+        LOCAL=$(git branch | grep "*" | awk '{print $2}')
+        REPO=$(git remote -v | grep push | awk '{print $2}' | sed -r "s/.*:(.*)\.git/\1/")
+
+        firefox-nightly --new-tab "https://git.provideitconsulting.se/$REPO/merge_requests/new?utf8=%E2%9C%93&merge_request[source_branch]=$LOCAL&merge_request[target_branch]=master"
+}
+
+unixconv() {
+        date -d @$1 -R
+}
+
+
 reset_docker_machine() {
         export DOCKER_TLS_VERIFY=""
         export DOCKER_HOST=""
         export DOCKER_CERT_PATH=""
         export DOCKER_MACHINE_NAME=""
+}
+
+lipsum() {
+        curl --silent -o- "https://lipsum.com/feed/json?amount=2" | jq '.feed.lipsum' | sed -e 's/"//g' -e 's/\\n/\n/g'
+}
+
+cheat() {
+        curl "cheat.sh/$1"
+}
+
+jsonfmt() {
+        cat $1 | jq '.'
 }
 
 # Git
@@ -120,6 +184,7 @@ alias gpo="git push -u origin HEAD"
 alias remove-orig="find . -name '*.orig' | xargs rm"
 function gcd { cd "$(git rev-parse --show-toplevel)"; }; #export -f gcd;
 alias g..='git rev-parse && cd "$(git rev-parse --show-toplevel)"'
+alias gfp='git ftp push'
 
 alias midman-deploy-stage="git co stage && git ml - && git push && git co -"
 alias merge-develop="git co develop && git ml - && git push && git co -"
@@ -146,7 +211,12 @@ alias dcl="docker-compose logs"
 alias dcps="docker-compose ps"
 alias dc-rebuild="docker-compose down && docker-compose up -d"
 alias dc-init="cp ~/.base-docker-compose.yml docker-compose.yml"
+alias dwp="docker-compose exec app wp --allow-root"
 alias pwdtest="echo \"`pwd`\""
+
+# Docker sync
+alias dss="docker-sync-stack"
+alias dsss="docker-sync-stack start"
 
 # Kubectl
 alias kc="kubectl"
@@ -167,5 +237,5 @@ function check-expiry() { echo | openssl s_client -connect "$1:443" 2>/dev/null 
 export NVM_DIR="/home/ranbogmord/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 PATH="/usr/local/heroku/bin:$PATH"
-eval $(thefuck --alias)
+#eval $(thefuck --alias)
 

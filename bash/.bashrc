@@ -64,3 +64,9 @@ alias vrs="vagrant reload && vagrant ssh"
 export NVM_DIR="/home/ranbogmord/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 PATH="/usr/local/heroku/bin:$PATH"
+
+###-tns-completion-start-###
+if [ -f /home/ranbogmord/.tnsrc ]; then 
+    source /home/ranbogmord/.tnsrc 
+fi
+###-tns-completion-end-###

@@ -49,7 +49,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vim vagrant grunt npm sudo)
+plugins=(openssl git vim npm sudo)
 
 # User configuration
 
@@ -88,11 +88,12 @@ alias zshconfig="vim ~/.zshrc && source ~/.zshrc"
 #export PS1="%{$fg_no_bold[cyan]%}%n%{$fg_no_bold[magenta]%}•%{$fg_no_bold[green]%}%3~$(git_prompt_info)%{$reset_color%} $ "
 #export PS1="\e[36m%n\e[35m-\e[32m%3~\e[0m"
 
-source ~/.dotfiles/zsh/zsh-git-prompt/zshrc.sh
-precmd() {
+#source ~/.dotfiles/zsh/zsh-git-prompt/zshrc.sh
+#source ~/.oh-my-zsh/plugins/kube-ps1/kube-ps1.zsh
+# precmd() {
         #PROMPT="%{$fg[cyan]%}%n%{$fg[magenta]%} | %{$fg[green]%}%3~%{$reset_color%} $(git_super_status) » "
-        PROMPT="» %{$fg[green]%}%3~%{$reset_color%} $(git_super_status) » "
-}
+#        PROMPT="» %{$fg[green]%}%3~%{$reset_color%} $(git_super_status) » "
+#}
 
 #export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault-pass
 
@@ -108,7 +109,7 @@ function chpwd {
     echo "`pwd`" > /tmp/.curdir
 }
 
-[[ -f /tmp/.curdir ]] && cd `cat /tmp/.curdir`
+[[ -f /tmp/.curdir ]] && cd "`cat /tmp/.curdir`"
 
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
@@ -117,3 +118,9 @@ fi
 source ~/.zsh-alias
 source /home/ranbogmord/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+
+###-tns-completion-start-###
+if [ -f /home/ranbogmord/.tnsrc ]; then 
+    source /home/ranbogmord/.tnsrc 
+fi
+###-tns-completion-end-###
