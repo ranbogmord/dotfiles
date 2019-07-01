@@ -13,7 +13,7 @@ general {
         color_good = "#BBBBBB"
         color_bad = "#CC1616"
         color_degraded = "#55858E"
-        interval = 2
+        interval = 1
 
 }
 
@@ -38,7 +38,7 @@ volume master {
         device = "default"
         mixer = "Master"
         mixer_idx = 0
-        format = " %volume "
+        format = " %volume "
 }
 
 load {
@@ -84,6 +84,6 @@ run_watch DHCP {
 }
 
 tztime local {
-        format = "%Y-%m-%d %H:%M %Z"
+        format = "%Y-%m-%d %H:%M:%S %Z"
 }
 

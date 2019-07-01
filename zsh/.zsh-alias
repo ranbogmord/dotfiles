@@ -25,6 +25,7 @@ export NPM_CONFIG_SIGN_GIT_TAG=true
 
 # System
 alias ll="ls -lah"
+alias alert="notify-send -u low -a \"Terminal\" \"Terminal job finished\" \"Terminal job was finished\""
 #alias .="ll"
 #alias fuck='sudo !!'
 # alias bashrc="vim ~/.bashrc && source ~/.bashrc"
@@ -239,3 +240,7 @@ export NVM_DIR="/home/ranbogmord/.nvm"
 PATH="/usr/local/heroku/bin:$PATH"
 #eval $(thefuck --alias)
 
+
+export PATH=$PATH:/home/ranbogmord/bin
+
+source '/home/ranbogmord/lib/azure-cli/az.completion'

@@ -59,7 +59,7 @@ bindsym $mod+d exec rofi  -show run -lines 3 -width 100 -fullscreen -padding 400
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
-bindsym $mod+l focus up
+#bindsym $mod+l focus up
 bindsym $mod+odiaeresis focus right
 
 # alternatively, you can use the cursor keys:
@@ -249,7 +249,7 @@ bindsym XF86KbdBrightnessUp exec light -A 10
 bindsym XF86KbdBrightnessDown exec light -A 10
 
 #bindsym ctrl+shift+l exec scrot /tmp/lock.png && convert /tmp/lock.png -blur 0x2 /tmp/lockblur.png && i3lock -i /tmp/lockblur.png
-bindsym ctrl+shift+l exec i3lock -i $bgimg -t
+bindsym $mod+l exec i3lock -i $bgimg -t
 
 exec_always xset -dpms
 exec_always xset s off
