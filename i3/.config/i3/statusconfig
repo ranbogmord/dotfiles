@@ -38,7 +38,7 @@ volume master {
         device = "default"
         mixer = "Master"
         mixer_idx = 0
-        format = " %volume "
+        format = "  %volume "
 }
 
 load {
