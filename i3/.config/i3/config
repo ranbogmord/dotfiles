@@ -248,8 +248,8 @@ bindsym XF86MonBrightnessDown exec light -U 10
 bindsym XF86KbdBrightnessUp exec light -A 10
 bindsym XF86KbdBrightnessDown exec light -A 10
 
-#bindsym ctrl+shift+l exec scrot /tmp/lock.png && convert /tmp/lock.png -blur 0x2 /tmp/lockblur.png && i3lock -i /tmp/lockblur.png
-bindsym $mod+l exec i3lock -i $bgimg -t
+bindsym $mod+l exec scrot /tmp/lock.png && convert /tmp/lock.png -filter Gaussian -blur 0x9 /tmp/lockblur.png && i3lock -i /tmp/lockblur.png
+#bindsym $mod+l exec i3lock -i $bgimg -t
 
 exec_always xset -dpms
 exec_always xset s off

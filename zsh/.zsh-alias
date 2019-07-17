@@ -64,6 +64,12 @@ alias p="python"
 alias lighthouse="lighthouse --chrome-flags=\"--no-sandbox --headless --disable-gpu\""
 alias intravpn="sudo vpn connect vpn.goteborg.se"
 alias intravpn-off="sudo vpn disconnect"
+alias cppwd="pwd | tr -d '\n' | clipcopy"
+
+make_api_model() {
+        php artisan make:model "$1" -m && php artisan make:controller "Api/$1Controller" --api --model="$1"
+}
+
 mkpass() {
         head /dev/urandom | tr -dc A-Za-z0-9 | head -c $1 ; echo ''
 }
@@ -96,6 +102,16 @@ cert-fingerprint()
         cat $1 | sed -e 's/-----BEGIN CERTIFICATE-----//' -e 's/-----END CERTIFICATE-----//' | tr -d '\n' | base64 -d | openssl sha1 -binary | base64 -w 0 | sed -e 's#/#_#g' -e 's#\+#-#g' -e 's/=//g'
 }
 
+compare_pubkey()
+{
+        DIFF=$(diff <(openssl x509 -pubkey -noout -in $1) <(openssl pkey -pubout -in $2))
+        echo $DIFF;
+        if [[ $DIFF == "" ]]; then
+                echo "Matches";
+        else
+                echo "\n\nMISSMATCH";
+        fi
+}
 
 #alias devssl="openssl req -x509 -newkey rsa:2048 -keyout dev.key -out dev.crt -days 365 -nodes -subj '/C=SE/ST=Vastra Gotaland/L=Gothenburg/O=DEVCERT/OU=DEV'"
 devssl()
@@ -172,6 +188,11 @@ cheat() {
 jsonfmt() {
         cat $1 | jq '.'
 }
+
+jiraissue() {
+        firefox-nightly "https://provideitdemo.atlassian.net/browse/$1";
+}
+
 
 # Git
 alias gs="git status"
